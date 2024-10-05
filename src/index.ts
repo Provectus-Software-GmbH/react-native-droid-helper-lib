@@ -2,11 +2,10 @@ import { NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
   `The package 'react-native-droid-helper-lib' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-const DroidHelperLib = NativeModules.DroidHelperLib
+const DroidHelperLib = Platform.OS === 'android' && NativeModules.DroidHelperLib
   ? NativeModules.DroidHelperLib
   : new Proxy(
       {},
@@ -18,11 +17,28 @@ const DroidHelperLib = NativeModules.DroidHelperLib
     );
 
 export function getCurrentSignatureForPackage(callback: (signatureHash: string) => void) {
-  DroidHelperLib.getCurrentSignatureForPackage(callback);
+  if (Platform.OS === 'android') {
+    DroidHelperLib.getCurrentSignatureForPackage(callback);
+  } else {
+    console.warn('getCurrentSignatureForPackage is android only');
+    callback('');
+  }
 }
+
 export function getRedirectUriForBroker(callback: (redirectUri: string) => void) {
-  DroidHelperLib.getRedirectUriForBroker(callback);
+  if (Platform.OS === 'android') {
+    DroidHelperLib.getRedirectUriForBroker(callback);
+  } else {
+    console.warn('getRedirectUriForBroker is android only');
+    callback('');
+  }
 }
+
 export function isInstalledOnWorkProfile(callback: (isInstalled: boolean) => void) {
-  DroidHelperLib.isInstalledOnWorkProfile(callback);
+  if (Platform.OS === 'android') {
+    DroidHelperLib.isInstalledOnWorkProfile(callback);
+  } else {
+    console.warn('isInstalledOnWorkProfile is android only');
+    callback(false);
+  }
 }
