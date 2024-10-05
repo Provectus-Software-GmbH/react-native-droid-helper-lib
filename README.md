@@ -12,13 +12,27 @@ npm install react-native-droid-helper-lib
 
 
 ```js
-import { multiply } from 'react-native-droid-helper-lib';
+import { getRedirectUriForBroker, 
+         getCurrentSignatureForPackage, 
+         isInstalledOnWorkProfile } from 'react-native-droid-helper-lib';
 
 // ...
 
-const result = await multiply(3, 7);
-```
+// get the signature hash
+getCurrentSignatureForPackage((signatureHash: string) => {    
+    console.log("SignatureHash: " + signatureHash);
+});
 
+// get the redirect uri for broker
+getRedirectUriForBroker((redirectUri: string) => {
+    console.log("RedirectUri: " + redirectUri);        
+});
+
+// check if the app is installed on work profile
+isInstalledOnWorkProfile((isInstalled: boolean) => {
+    console.log("IsInstalledOnWorkProfile:" + isInstalled);        
+});
+```
 
 ## Contributing
 
