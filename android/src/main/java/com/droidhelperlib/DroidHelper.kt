@@ -26,7 +26,7 @@ class DroidHelper(context: Context) {
     )
   }
 
-  fun getCurrentSignatureForPackage(): String {
+  fun getCurrentSignatureForPackageOld(): String {
     @Suppress("DEPRECATION")
     @SuppressLint("PackageManagerGetSignatures")
     val packageInfo: PackageInfo? = context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES)
@@ -45,7 +45,7 @@ class DroidHelper(context: Context) {
   }
 
   // Method to get the current signature for the package
-  fun getCurrentSignatureForPackageOld(): String {
+  fun getCurrentSignatureForPackage(): String {
     // Get the package info for the current package
     val packageInfo = context.packageManager.getPackageInfo(
       context.packageName, PackageManager.GET_SIGNING_CERTIFICATES
